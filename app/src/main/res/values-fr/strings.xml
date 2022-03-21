@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Open data</string>
+    <string name="update">Màj</string>
+    <string name="pollutant">Polluant</string>
+    <string name="country">Pays</string>
+    <string name="world_air_quality">Qualité de l\'air dans le monde</string>
+    <string name="value">Valeur</string>
+    <string name="city">Ville</string>
+    <string name="value_g_m">Valeur (µg/m³)</string>
+    <string name="location">Lieu</string>
+    <string name="date">Date</string>
+    <string name="map">Carte</string>
+    <string name="preferences">Preferences</string>
+    <string name="try_again">Réessayer</string>
+    <string name="no_internet_connection">Pas de connexion internet</string>
+    <string name="warning">Attention</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Langue</string>
+
+    <!-- Messages Preferences -->
+    <string name="reply_title">Selectionner la langue</string>
+
+    <!-- Sync Preferences -->
+    <string name="title_activity_settings">Options</string>
+
+</resources>

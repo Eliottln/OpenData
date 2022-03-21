@@ -1,0 +1,64 @@
+package com.example.opendata;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import java.util.ArrayList;
+
+public class ListAdapter extends BaseAdapter {
+
+    private ArrayList<Data> dataArrayList;
+    private Context context;
+
+    public ListAdapter(ArrayList<Data> dataArrayList, Context context) {
+        this.dataArrayList = dataArrayList;
+        this.context = context;
+    }
+
+    @Override
+    public int getCount() {
+        return dataArrayList.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return dataArrayList.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ConstraintLayout layoutItem;
+        LayoutInflater mInflater = LayoutInflater.from(context);
+
+        if (convertView == null) {
+            layoutItem = (ConstraintLayout) mInflater.inflate(R.layout.item_layout, parent, false);
+        } else {
+            layoutItem = (ConstraintLayout) convertView;
+        }
+
+        TextView city = layoutItem.findViewById(R.id.city);
+        TextView pollutant = layoutItem.findViewById(R.id.pollutant);
+        TextView value = layoutItem.findViewById(R.id.value);
+
+        city.setText(dataArrayList.get(position).getCity());
+        pollutant.setText(dataArrayList.get(position).getPollutant());
+//        String tmpValue = dataArrayList.get(position).getValue();
+//        if (tmpValue.length()>5){
+//            tmpValue=tmpValue.substring(0,5);
+//        }
+        value.setText(""+dataArrayList.get(position).getValue());
+
+        return layoutItem;
+    }
+}
