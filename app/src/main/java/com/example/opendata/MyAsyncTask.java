@@ -23,12 +23,16 @@ public class MyAsyncTask extends AsyncTask {
     protected Object doInBackground(@NonNull Object[] objects) {
         this.dataArrayList = (ArrayList<Data>) objects[0];
         String message = "";
-        String URLString;
-        if (objects.length > 2){
-            URLString = new StringBuilder().append("https://public.opendatasoft.com/api/records/1.0/search/?dataset=openaq&q=&rows=30&start=").append(Integer.toString((Integer) objects[2])).append("&sort=measurements_lastupdated").toString();
-        }else {
-            URLString = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=openaq&q=&rows=30&start=0&sort=measurements_lastupdated";
+        boolean decreasing = (boolean) objects[4];
+        if (decreasing){
+            objects[3]="-"+objects[3];
         }
+        String URLString;
+        URLString = new StringBuilder().append("https://public.opendatasoft.com/api/records/1.0/search/?dataset=openaq&q=&rows=30&start=")
+                .append((Integer) objects[2])
+                .append("&sort=")
+                .append(objects[3]).toString();
+
 
         adapter  = (ListAdapter) objects[1];
 

@@ -12,7 +12,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_logo"
-        android:label="@string/app_name"
+        android:label="@string/world_air_quality"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenData"

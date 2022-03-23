@@ -1,15 +1,32 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
+    <PreferenceCategory app:title="@string/theme_header">
 
         <ListPreference
-            app:defaultValue="false"
-            app:entries="@array/language_entries"
-            app:entryValues="@array/language_values"
-            app:key="language"
-            app:title="@string/reply_title"
-            app:summary="Language preference"
+            app:defaultValue="Auto"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:key="theme"
+            app:title="@string/theme_title"
             app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/filters_header">
+
+        <ListPreference
+            app:defaultValue="Last updated"
+            app:entries="@array/sort_entries"
+            app:entryValues="@array/sort_values"
+            app:key="sort"
+            app:title="@string/sort_title"
+            app:useSimpleSummaryProvider="true"/>
+
+        <SwitchPreference
+            app:defaultValue="false"
+            app:title="@string/order_title"
+            app:key="order"/>
 
     </PreferenceCategory>
 

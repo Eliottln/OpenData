@@ -16,10 +16,13 @@
     <string name="warning">Warning</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Language</string>
+    <string name="theme_header">Theme</string>
+    <string name="filters_header">Filters</string>
 
     <!-- Messages Preferences -->
-    <string name="reply_title">Select language</string>
+    <string name="theme_title">App theme</string>
+    <string name="sort_title">Sort by :</string>
+    <string name="order_title">Increasing</string>
 
     <!-- Sync Preferences -->
     <string name="title_activity_settings">Settings</string>

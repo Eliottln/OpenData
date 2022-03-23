@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerTitle">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/cityHeader"
@@ -58,17 +58,6 @@
             android:textSize="24sp" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/headerTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/world_air_quality"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listView"
