@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import java.util.ArrayList;
 
 public class ListAdapter extends BaseAdapter {
@@ -53,10 +51,6 @@ public class ListAdapter extends BaseAdapter {
 
         city.setText(dataArrayList.get(position).getCity());
         pollutant.setText(dataArrayList.get(position).getPollutant());
-//        String tmpValue = dataArrayList.get(position).getValue();
-//        if (tmpValue.length()>5){
-//            tmpValue=tmpValue.substring(0,5);
-//        }
         value.setText(""+dataArrayList.get(position).getValue());
 
         return layoutItem;

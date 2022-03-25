@@ -1,13 +1,10 @@
 package com.example.opendata;
 
 import android.os.AsyncTask;
-
 import androidx.annotation.NonNull;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -51,6 +48,7 @@ public class MyAsyncTask extends AsyncTask {
                 message = stringBuilder.toString();
                 input.close();
             }
+            urlConnection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,9 +82,10 @@ public class MyAsyncTask extends AsyncTask {
                         location,
                         city,
                         lastUpdate,
-                        value, latitude, longitude));
+                        value,
+                        latitude,
+                        longitude));
             }
-            SplashScreen.PARSE_END = true;
         } catch (JSONException e) {
             e.printStackTrace();
         }

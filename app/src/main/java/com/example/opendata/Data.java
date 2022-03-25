@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class Data implements Serializable {
 
-    private String countryName;
-    private String pollutant;
-    private String location;
-    private String city;
-    private String lastUpdate;
-    private double value;
-    private double latitude;
-    private double longitude;
+    private final String countryName;
+    private final String pollutant;
+    private final String location;
+    private final String city;
+    private final String lastUpdate;
+    private final double value;
+    private final double latitude;
+    private final double longitude;
 
     public Data(String countryName, String pollutant, String location, String city, String lastUpdate, double value, double latitude, double longitude) {
         this.countryName = countryName;

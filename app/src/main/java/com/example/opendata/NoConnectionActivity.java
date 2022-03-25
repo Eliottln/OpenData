@@ -2,7 +2,6 @@ package com.example.opendata;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -35,7 +34,6 @@ public class NoConnectionActivity extends AppCompatActivity {
             toast.cancel();
             toast.show();
         }
-        //progressBar.setVisibility(View.INVISIBLE);
     }
 
     private boolean isNetworkConnected() {

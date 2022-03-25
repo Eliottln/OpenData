@@ -13,14 +13,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import java.text.MessageFormat;
 
 public class MapFragment extends Fragment {
 
     private MapView mapView;
-    private Data data;
+    private final Data data;
 
     public MapFragment(Data data){
         super();
@@ -41,7 +43,7 @@ public class MapFragment extends Fragment {
         TextView location = rootView.findViewById(R.id.tvLocation);
         location.setText(data.getLocation());
         TextView date = rootView.findViewById(R.id.tvDate);
-        date.setText(data.getLastUpdate());
+        date.setText(MessageFormat.format("{0} {1}", data.getLastUpdate().substring(0, 10), data.getLastUpdate().substring(11, 16)));
         TextView pollutant = rootView.findViewById(R.id.tvPollutant);
         pollutant.setText(data.getPollutant());
         TextView value = rootView.findViewById(R.id.tvValue);
@@ -53,17 +55,21 @@ public class MapFragment extends Fragment {
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(GoogleMap googleMap) {
+            public void onMapReady(@NonNull GoogleMap googleMap) {
                 LatLng position = new LatLng(data.getLatitude(), data.getLongitude());
                 String markerText = data.getLocation();
                 //add marker
-                Marker marker  = googleMap.addMarker(new MarkerOptions().position(position).title(markerText));
+                Marker marker  = googleMap.addMarker(new MarkerOptions()
+                        .position(position)
+                        .title(markerText)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                 //zoom to position with level 15
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, 15);
                 googleMap.animateCamera(cameraUpdate);
             }
         });
 
+        setRetainInstance(true);
         return rootView;
     }
 

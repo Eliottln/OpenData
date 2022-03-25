@@ -2,20 +2,14 @@ package com.example.opendata;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-
 import android.content.Intent;
-import android.os.Handler;
-import android.view.WindowManager;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
-
-    public static boolean PARSE_END = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
