@@ -35,7 +35,7 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(main);
                 finish();
             });
-            task.execute(dataArrayList, 0, sort, increasing);
+            task.execute(dataArrayList, 0, sort, increasing, "");
 
         }else {
             startActivity(new Intent(SplashScreen.this, NoConnectionActivity.class));

@@ -35,7 +35,10 @@ public class MyAsyncTask extends AsyncTask {
         URLString = new StringBuilder().append("https://public.opendatasoft.com/api/records/1.0/search/?dataset=openaq&q=&rows=30&start=")
                 .append((Integer) objects[1])
                 .append("&sort=")
-                .append(objects[2]).toString();
+                .append(objects[2])
+                .append("&q=")
+                .append(objects[4])
+                .toString();
 
         //get JSON
         try {

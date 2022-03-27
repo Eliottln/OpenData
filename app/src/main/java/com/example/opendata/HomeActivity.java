@@ -9,8 +9,11 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.opendata.AsyncTask.Callback;
@@ -31,15 +34,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        try {
-            Intent splash = getIntent();
-            this.dataArrayList = (ArrayList<Data>) splash.getSerializableExtra("list");
-            this.adapter = new ListAdapter(dataArrayList, this);
-        }catch (Exception e){//n'est pas censé arriver
-            this.dataArrayList = new ArrayList<>();
-            this.adapter = new ListAdapter(dataArrayList, this);
-            executeTask();
-        }
+        Intent splash = getIntent();
+        this.dataArrayList = (ArrayList<Data>) splash.getSerializableExtra("list");
+        this.adapter = new ListAdapter(dataArrayList, this);
 
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
@@ -58,12 +55,27 @@ public class HomeActivity extends AppCompatActivity {
                 if(firstVisibleItem+visibleItemCount == totalItemCount && totalItemCount!=0) {
                     if (isNetworkConnected()) {
                         page += 30;
-                        executeTask();
+                        executeTask("");
                     }else{
                         Toast toast = Toast.makeText(getApplicationContext(), "No connection", Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
+            }
+        });
+
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                dataArrayList.clear();
+                executeTask(query);
+                searchView.setQuery("",false);
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
             }
         });
 
@@ -105,18 +117,24 @@ public class HomeActivity extends AppCompatActivity {
                 this.increasing = order;
                 dataArrayList.clear();
                 page=0;
-                executeTask();
+                executeTask("");
             }
         }
     }
 
-    public void executeTask(){
-        MyAsyncTask task = new MyAsyncTask(new Callback() {
-            @Override
-            public void processFinish(String output) {
+    public void executeTask(String search){
+        MyAsyncTask task = new MyAsyncTask(output -> {
+            TextView result = findViewById(R.id.noResult);
+            ListView listView = findViewById(R.id.listView);
+            if (dataArrayList.size()==0){
+                listView.setVisibility(View.GONE);
+                result.setVisibility(View.VISIBLE);
+            }else{
+                result.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
                 adapter.notifyDataSetChanged();
             }
         });
-        task.execute(dataArrayList, page, sort, increasing);
+        task.execute(dataArrayList, page, sort, increasing, search);
     }
 }

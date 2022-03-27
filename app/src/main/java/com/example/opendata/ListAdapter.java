@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 
@@ -45,10 +47,12 @@ public class ListAdapter extends BaseAdapter {
             layoutItem = (ConstraintLayout) convertView;
         }
 
+        TextView country = layoutItem.findViewById(R.id.country);
         TextView city = layoutItem.findViewById(R.id.city);
         TextView pollutant = layoutItem.findViewById(R.id.pollutant);
         TextView value = layoutItem.findViewById(R.id.value);
 
+        country.setText(dataArrayList.get(position).getCountryName());
         city.setText(dataArrayList.get(position).getCity());
         pollutant.setText(dataArrayList.get(position).getPollutant());
         value.setText(""+dataArrayList.get(position).getValue());
