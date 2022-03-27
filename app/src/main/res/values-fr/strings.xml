@@ -28,5 +28,6 @@
 
     <!-- Sync Preferences -->
     <string name="title_activity_settings">Options</string>
+    <string name="logo">Logo</string>
 
 </resources>

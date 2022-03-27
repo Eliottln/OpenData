@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class ListAdapter extends BaseAdapter {
 
-    private ArrayList<Data> dataArrayList;
-    private Context context;
+    private final ArrayList<Data> dataArrayList;
+    private final Context context;
 
     public ListAdapter(ArrayList<Data> dataArrayList, Context context) {
         this.dataArrayList = dataArrayList;

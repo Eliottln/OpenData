@@ -8,6 +8,10 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.content.Intent;
 
+import com.example.opendata.AsyncTask.MyAsyncTask;
+
+import java.util.ArrayList;
+
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
@@ -15,17 +19,28 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            setTheme();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        setTheme();
 
-        if (isNetworkConnected())
-            startActivity(new Intent(SplashScreen.this, HomeActivity.class));
-        else
+        if (isNetworkConnected()) {
+            Intent main = new Intent(SplashScreen.this, HomeActivity.class);
+
+            SharedPreferences sh = getSharedPreferences("Preferences", MODE_PRIVATE);
+            String sort = sh.getString("sort", "measurements_lastupdated");
+            boolean increasing = sh.getBoolean("order", false);
+
+            ArrayList<Data> dataArrayList = new ArrayList<>();
+
+            MyAsyncTask task = new MyAsyncTask(output -> {
+                main.putExtra("list", dataArrayList);
+                startActivity(main);
+                finish();
+            });
+            task.execute(dataArrayList, 0, sort, increasing);
+
+        }else {
             startActivity(new Intent(SplashScreen.this, NoConnectionActivity.class));
-        finish();
+            finish();
+        }
     }
 
     private boolean isNetworkConnected() {
@@ -35,7 +50,7 @@ public class SplashScreen extends AppCompatActivity {
 
     private void setTheme(){
         SharedPreferences sh = getSharedPreferences("Preferences", MODE_PRIVATE);
-        String theme = sh.getString("theme", "");
+        String theme = sh.getString("theme", "auto");
         if ("auto".equals(theme)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         } else if ("light".equals(theme)) {

@@ -1,7 +1,11 @@
-package com.example.opendata;
+package com.example.opendata.AsyncTask;
 
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
+
+import com.example.opendata.AsyncTask.Callback;
+import com.example.opendata.Data;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,25 +17,25 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MyAsyncTask extends AsyncTask {
 
-    private ListAdapter adapter;
-    private ArrayList<Data> dataArrayList;
+    private final Callback callback;
+
+    public MyAsyncTask(Callback callback) {
+        this.callback = callback;
+    }
 
     @Override
     protected Object doInBackground(@NonNull Object[] objects) {
-        this.dataArrayList = (ArrayList<Data>) objects[0];
+        ArrayList<Data> dataArrayList = (ArrayList<Data>) objects[0];
         String message = "";
-        boolean decreasing = (boolean) objects[4];
+        boolean decreasing = (boolean) objects[3];
         if (decreasing){
-            objects[3]="-"+objects[3];
+            objects[2]="-"+objects[2];
         }
         String URLString;
         URLString = new StringBuilder().append("https://public.opendatasoft.com/api/records/1.0/search/?dataset=openaq&q=&rows=30&start=")
-                .append((Integer) objects[2])
+                .append((Integer) objects[1])
                 .append("&sort=")
-                .append(objects[3]).toString();
-
-
-        adapter  = (ListAdapter) objects[1];
+                .append(objects[2]).toString();
 
         //get JSON
         try {
@@ -76,6 +80,7 @@ public class MyAsyncTask extends AsyncTask {
                 }
                 double latitude = (double) field.getJSONArray("coordinates").get(0);
                 double longitude = (double) field.getJSONArray("coordinates").get(1);
+
                 dataArrayList.add(new Data(
                         countryName,
                         pollutant,
@@ -89,12 +94,12 @@ public class MyAsyncTask extends AsyncTask {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return true;
+        return "Finish";
     }
 
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        adapter.notifyDataSetChanged();
+        callback.processFinish((String) o);
     }
 }

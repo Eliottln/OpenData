@@ -11,8 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.opendata.AsyncTask.Callback;
+import com.example.opendata.AsyncTask.MyAsyncTask;
+
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
@@ -28,8 +31,15 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        this.dataArrayList = new ArrayList<>();
-        this.adapter = new ListAdapter(dataArrayList, this);
+        try {
+            Intent splash = getIntent();
+            this.dataArrayList = (ArrayList<Data>) splash.getSerializableExtra("list");
+            this.adapter = new ListAdapter(dataArrayList, this);
+        }catch (Exception e){//n'est pas censé arriver
+            this.dataArrayList = new ArrayList<>();
+            this.adapter = new ListAdapter(dataArrayList, this);
+            executeTask();
+        }
 
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
@@ -42,20 +52,13 @@ public class HomeActivity extends AppCompatActivity {
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
+            public void onScrollStateChanged(AbsListView absListView, int i) {}
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem+visibleItemCount == totalItemCount && totalItemCount!=0)
-                {
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(firstVisibleItem+visibleItemCount == totalItemCount && totalItemCount!=0) {
                     if (isNetworkConnected()) {
                         page += 30;
-                        new MyAsyncTask().execute(dataArrayList, adapter, page, sort, increasing);
-                        TextView test = findViewById(R.id.recordsQuantity);
-                        String tmp = Integer.toString((page + 30));
-                        test.setText(tmp);
+                        executeTask();
                     }else{
                         Toast toast = Toast.makeText(getApplicationContext(), "No connection", Toast.LENGTH_SHORT);
                         toast.show();
@@ -64,16 +67,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        try {
-            SharedPreferences sh = getSharedPreferences("Preferences", MODE_PRIVATE);
-            sort = sh.getString("sort", "");
-            increasing = sh.getBoolean("order", false);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-        new MyAsyncTask().execute(dataArrayList, adapter, page, sort, increasing);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -101,26 +95,28 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100 && resultCode != RESULT_OK) {
-            try {
-                SharedPreferences sh = getSharedPreferences("Preferences", MODE_PRIVATE);
-                String sort = sh.getString("sort", "");
-                boolean order = sh.getBoolean("order", false);
+        if (requestCode == 100 && resultCode != RESULT_OK) { //settings activity
+            SharedPreferences sh = getSharedPreferences("Preferences", MODE_PRIVATE);
+            String sort = sh.getString("sort", "measurements_lastupdated");
+            boolean order = sh.getBoolean("order", false);
 
-                if (!this.sort.equals(sort) || this.increasing != order){
-                    this.sort = sort;
-                    this.increasing = order;
-                    dataArrayList.clear();
-                    page=0;
-                    TextView test = findViewById(R.id.recordsQuantity);
-                    String tmp = Integer.toString((page + 30));
-                    test.setText(tmp);
-                    new MyAsyncTask().execute(dataArrayList, adapter, page, sort, increasing);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!this.sort.equals(sort) || this.increasing != order){
+                this.sort = sort;
+                this.increasing = order;
+                dataArrayList.clear();
+                page=0;
+                executeTask();
             }
         }
+    }
+
+    public void executeTask(){
+        MyAsyncTask task = new MyAsyncTask(new Callback() {
+            @Override
+            public void processFinish(String output) {
+                adapter.notifyDataSetChanged();
+            }
+        });
+        task.execute(dataArrayList, page, sort, increasing);
     }
 }
