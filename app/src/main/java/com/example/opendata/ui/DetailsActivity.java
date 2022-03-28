@@ -1,7 +1,10 @@
-package com.example.opendata;
+package com.example.opendata.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.opendata.model.Data;
+import com.example.opendata.R;
 
 public class DetailsActivity extends AppCompatActivity {
 

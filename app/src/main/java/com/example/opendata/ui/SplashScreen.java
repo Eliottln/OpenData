@@ -1,4 +1,4 @@
-package com.example.opendata;
+package com.example.opendata.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.content.Intent;
 
 import com.example.opendata.AsyncTask.MyAsyncTask;
+import com.example.opendata.model.Data;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.opendata;
+package com.example.opendata.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
+
+import com.example.opendata.R;
 
 public class SettingsActivity extends AppCompatActivity {
     private static ListPreference pTheme;

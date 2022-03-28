@@ -1,4 +1,4 @@
-package com.example.opendata;
+package com.example.opendata.model;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.opendata;
+package com.example.opendata.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +16,9 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.opendata.AsyncTask.Callback;
 import com.example.opendata.AsyncTask.MyAsyncTask;
+import com.example.opendata.model.Data;
+import com.example.opendata.R;
 
 import java.util.ArrayList;
 

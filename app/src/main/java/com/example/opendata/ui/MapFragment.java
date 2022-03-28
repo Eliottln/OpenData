@@ -1,4 +1,4 @@
-package com.example.opendata;
+package com.example.opendata.ui;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.opendata.model.Data;
+import com.example.opendata.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

@@ -3,8 +3,7 @@ package com.example.opendata.AsyncTask;
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 
-import com.example.opendata.AsyncTask.Callback;
-import com.example.opendata.Data;
+import com.example.opendata.model.Data;
 
 import org.json.JSONArray;
 import org.json.JSONException;

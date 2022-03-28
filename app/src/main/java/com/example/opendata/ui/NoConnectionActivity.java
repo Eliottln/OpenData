@@ -1,14 +1,21 @@
-package com.example.opendata;
+package com.example.opendata.ui;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.opendata.AsyncTask.MyAsyncTask;
+import com.example.opendata.R;
+import com.example.opendata.model.Data;
+
+import java.util.ArrayList;
 
 public class NoConnectionActivity extends AppCompatActivity {
 
@@ -27,8 +34,20 @@ public class NoConnectionActivity extends AppCompatActivity {
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
         if (isNetworkConnected()){
-            startActivity(new Intent(NoConnectionActivity.this, HomeActivity.class));
-            finish();
+            Intent main = new Intent(NoConnectionActivity.this, HomeActivity.class);
+
+            SharedPreferences sh = getSharedPreferences("Preferences", MODE_PRIVATE);
+            String sort = sh.getString("sort", "measurements_lastupdated");
+            boolean increasing = sh.getBoolean("order", false);
+
+            ArrayList<Data> dataArrayList = new ArrayList<>();
+
+            MyAsyncTask task = new MyAsyncTask(output -> {
+                main.putExtra("list", dataArrayList);
+                startActivity(main);
+                finish();
+            });
+            task.execute(dataArrayList, 0, sort, increasing, "");
         }
         else {
             toast.cancel();
